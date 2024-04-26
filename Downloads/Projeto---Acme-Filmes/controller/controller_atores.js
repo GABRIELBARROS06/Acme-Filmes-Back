@@ -242,7 +242,8 @@ const setAtualizarAtor = async function (id_ator, dadosAtor, contentType) {
                         atorJSON.status = message.SUCCESS_CREATED_ITEM.status
                         atorJSON.message = message.SUCCESS_CREATED_ITEM.message
 
-                        console.log('bbbbbbbbbbb');
+                        console.log('bbbbbbvbcxbcx');
+                        console.log('sfdvdsvds')
                         console.log(atorJSON);
 
                         return atorJSON
