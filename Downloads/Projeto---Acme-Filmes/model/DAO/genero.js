@@ -1,3 +1,11 @@
+/***************************************************************************
+ * Objetivo: Arquivo reponsavel pelo acesso ao Banco de Dados_mySQL,
+ * aqui faremos o CRUD na tabel de genêro
+ * Data: 01/05/2024
+ * Autor: Gabriel de Barros
+ * Versão: 1.0
+ **************************************************************************/
+
 //Import da biblioteca do prima/client para manipular os scripts SQL
 const { PrismaClient } = require('@prisma/client')
 

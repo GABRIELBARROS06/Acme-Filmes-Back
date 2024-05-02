@@ -1,7 +1,7 @@
 /***************************************************************************
  * Objetivo: Arquivo reponsavel pelo acesso ao Banco de Dados_mySQL,
- * aqui faremos o CRUD na tabel de filme
- * Data: 01/02/2024
+ * aqui faremos o CRUD na tabel de ator
+ * Data: 01/05/2024
  * Autor: Gabriel de Barros
  * Versão: 1.0
  **************************************************************************/

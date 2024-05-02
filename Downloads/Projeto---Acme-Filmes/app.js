@@ -19,6 +19,7 @@ const controller = require('./controller/controller_filme.js')
 const controllerClass = require('./controller/controller_classificacao.js')
 const controllerGenero = require('./controller/controller_genero.js')
 const controllerAtor = require('./controller/controller_atores.js')
+const controllerDiretor = require('./controller/controller_diretores.js')
 
 /**********************************************************************************/
 
@@ -319,6 +320,44 @@ app.delete('/v2/acmeFilmes/deleteAtor/:id', cors(), async function (request, res
 
 })
 /****************************CRUD DE DIRETOR**************************************/
+app.get('/v2/acmeFilmes/ListarDiretor', cors(), async function(request, response){
+        let dadosDiretor = await controllerDiretor.getListarDiretor();
+
+        if(dadosDiretor){
+                response.json(dadosAtor);
+                response.status(dadosAtor.status_code);
+        } else{
+                response.json({ Message: 'Nenhum registro foi encontrado' })
+                response.status(404)
+        }
+})
+
+app.get('/v2/acmeFilmes/BuscarDiretor/:id', cors(), async function(request, response){
+        const idDiretor = request.params.id
+        
+        let dadosDiretor = await controllerDiretor.getBuscarIdDiretor(idDiretor);
+
+        if(dadosDiretor){
+                response.json(dadosDiretor)
+                response.status(dadosDiretor.status_code)
+        } else {
+                response.json({Message: 'Nenhum registro foi encontrado'})
+                response.status(440)
+        }
+})
+app.get('/v2/acmeFilmes/nomeDiretor', cors(), async function(request, response){
+        const nomeDiretor = request.query.nome
+
+        let dadosDiretor = await controllerDiretor.getBuscarNomeDiretor(nomeDiretor)
+
+        if(dadosDiretor){
+                response.json(dadosDiretor)
+                response.status(dadosDiretor.status_code)
+        } else {
+                response.json({Message: 'Nenhum registro foi encontrado'})
+                response.status(440)
+        }
+})
 //Endpoint criado para ligar a API
 app.listen('8080', function () {
         console.log('API funcionando e aguardando requisições!!!!')

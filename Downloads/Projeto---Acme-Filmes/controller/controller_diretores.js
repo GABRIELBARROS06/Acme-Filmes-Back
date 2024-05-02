@@ -7,21 +7,21 @@
 
 const message = require('../module/config.js');
 
-const atorDAO = require('../model/DAO/ator.js');
+const diretorDAO = require('../model/DAO/diretor.js');
 
-const getListarAtor = async function () {
+const getListarDiretor = async function () {
 
-    const atorJSON = {}
+    const diretorJSON = {}
 
-    let dadosAtor = await atorDAO.selectAllAtor()
+    let dadosDiretor = await diretorDAO.selectAllDiretor()
 
-    if (dadosAtor) {
+    if (dadosDiretor) {
         if (dadosAtor.length > 0) {
-            atorJSON.file = dadosAtor
-            atorJSON.quantidade = dadosAtor.length
-            atorJSON.status_code = 200
+            diretorJSON.file = dadosDiretor
+            diretorJSON.quantidade = dadosDiretor.length
+            diretorJSON.status_code = 200
 
-            return atorJSON
+            return diretorJSON
         }
         else {
             return message.ERROR_INTERNAL_SERVER_DB
@@ -35,26 +35,26 @@ const getListarAtor = async function () {
 
 }
 
-const getBuscarIdAtor = async function (id_ator) {
+const getBuscarIdDiretor = async function (id_diretor) {
 
-    let idAtor = id_ator
+    let idDiretor = id_diretor
 
-    const atorJSON = {}
+    const diretorJSON = {}
 
-    if (idAtor == '' || isNaN(idAtor) || idAtor == null) {
+    if (idDiretor == '' || isNaN(idDiretor) || idDiretor == null) {
         return message.ERROR_NOT_FOUND //404
     }
 
     else {
-        let dadosAtor = await atorDAO.selectByIdAtor(idAtor);
+        let dadosDiretor= await diretorDAO.selectByIdDiretor(idDiretor);
 
 
-        if (dadosAtor) {
-            if (dadosAtor.length > 0) {
-                atorJSON.file = dadosAtor
-                atorJSON.status_code = 200
+        if (dadosDiretor) {
+            if (dadosDiretor.length > 0) {
+                diretorJSON.file = dadosDiretor
+                diretorJSON.status_code = 200
 
-                return atorJSON
+                return diretorJSON
             }
             else {
                 return message.ERROR_NOT_FOUND //404
@@ -69,33 +69,33 @@ const getBuscarIdAtor = async function (id_ator) {
 
 }
 //Função para buscar um ator filtrando pelo nome
-const getBuscarNomeAtor = async function (nome) {
+const getBuscarNomeDiretor = async function (nome) {
 
     //Variável local para facilitar a validação
-    const nomeAtor = nome
+    const nomeDiretor = nome
 
     //objeto JSON de Ator
-    const atorJSON = {}
+    const diretorJSON = {}
 
     //validação do conteúdo da variavel nome
-    if (nomeAtor == '' || nomeAtor == undefined) {
+    if (nomeDiretor == '' || nomeDiretor == undefined) {
 
         return message.ERROR_REQUIRED_FIELDS //400
     }
     else {
         //encaminha o nome ao DAO para fazer a pesquisa no banco de dados
-        let dadosAtor = await atorDAO.selectByNomeAtor(nomeAtor)
+        let dadosDiretor = await diretorDAO.selectByNomeDiretor(nomeDiretor)
 
         //verifica se o DAO retornou dados
-        if (dadosAtor) {
+        if (dadosDiretor) {
 
             //validação para ver a quantidade de itens retornados
-            if (dadosAtor.length > 0) {
+            if (dadosDiretor.length > 0) {
                 //criação do JSON para retorno dos dados
-                atorJSON.file = dadosAtor
-                atorJSON.status_code = 200
+                diretorJSON.file = dadosDiretor
+                diretorJSON.status_code = 200
 
-                return atorJSON
+                return diretorJSON
             }
             else {
                 return message.ERROR_NOT_FOUND //404
@@ -112,7 +112,7 @@ const getBuscarNomeAtor = async function (nome) {
 
 }
 
-const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
+const setInserirNovoDiretor = async function (id, dadosDiretor, contentType) {
 
     try {
 
@@ -120,13 +120,13 @@ const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
 
         if (String(contentType).toLowerCase() == 'application/json') {
 
-            let atorJSON = {}
+            let diretorJSON = {}
 
 
-            if (dadosAtor.nome == '' || dadosAtor.nome == null || dadosAtor.nome == undefined || dadosAtor.length > 200 ||
-                dadosAtor.biografia == '' || dadosAtor.biografia == null || dadosAtor.biografia == undefined || dadosAtor.length > 500 ||
-                dadosAtor.foto == '' || dadosAtor.foto == null || dadosAtor.foto == undefined || dadosAtor.length > 30 ||
-                dadosAtor.data_nascimento == '' || dadosAtor.data_nascimento == null || dadosAtor.data_nascimento == undefined || dadosAtor.length > 20
+            if (dadosDiretor.nome == '' || dadosDiretor.nome == null || dadosDiretor.nome == undefined || dadosDiretor.length > 200 ||
+                dadosDiretor.biografia == '' || dadosDiretor.biografia == null || dadosDiretor.biografia == undefined || dadosDiretor.length > 500 ||
+                dadosDiretor.foto == '' || dadosDiretor.foto == null || dadosDiretor.foto == undefined || dadosDiretor.length > 30 ||
+                dadosDiretor.data_nascimento == '' || dadosDiretor.data_nascimento == null || dadosDiretor.data_nascimento == undefined || dadosDiretor.length > 20
 
             ) {
                 return message.ERROR_REQUIRED_FIELDS //400
@@ -136,8 +136,8 @@ const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
                 let validadeStatus = true
 
                 if (validadeStatus) {
-                    let atorNovo = await atorDAO.insertAtor(id, dadosAtor)
-                    let atorID = await atorDAO.lastInsertId()
+                    let diretorNovo = await diretorDAO.insertDiretor(id, dadosDiretor)
+                    let diretorID = await diretorDAO.lastInsertId()
 
 
 
@@ -149,17 +149,17 @@ const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
                         atorJSON.message = message.SUCCESS_CREATED_ITEM.message
 
 
-                        return atorJSON //201
+                        return diretorJSON //201
 
                     }
                     else {
-                        console.log("toioooou");
+                       
                         return message.ERROR_INTERNAL_SERVER_DB //500
                     }
                 }
             }
         } else {
-            console.log("salbeee");
+           
             return message.ERROR_CONTENT_TYPE //415
         }
 
@@ -169,20 +169,20 @@ const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
 
 }
 
-const setExcluirAtor = async function (id_classificacao) {
+const setExcluirDiretor = async function (id_classificacao) {
 
     try {
 
-        idAtor = id_classificacao
+        idDiretor = id_classificacao
 
-        if (idAtor == null || isNaN(idAtor) || idAtor == undefined || idAtor == '') {
+        if (idDiretor == null || isNaN(idDiretor) || idDiretor == undefined || idDiretor == '') {
 
             return message.ERROR_REQUIRED_FIELDS //404
 
         } else {
-            let dadosAtor = await atorDAO.deleteAtor(idAtor)
+            let dadosDiretor = await diretorDAO.deleteAtor(idDiretor)
 
-            if (dadosAtor) {
+            if (dadosDiretor) {
                 return message.SUCESS_DELETE_ITEM //201
             }
             else {
@@ -195,7 +195,7 @@ const setExcluirAtor = async function (id_classificacao) {
     }
 }
 
-const setAtualizarAtor = async function (id_ator, dadosAtor, contentType) {
+const setAtualizarDiretor = async function (id_ator, dadosDiretor, contentType) {
     try {
 
 
@@ -266,10 +266,10 @@ const setAtualizarAtor = async function (id_ator, dadosAtor, contentType) {
 }
 
 module.exports = {
-    getListarAtor,
-    getBuscarIdAtor,
-    getBuscarNomeAtor,
-    setInserirNovoAtor,
-    setExcluirAtor,
-    setAtualizarAtor
+    getListarDiretor,
+    getBuscarIdDiretor,
+    getBuscarNomeDiretor,
+    setInserirNovoDiretor,
+    setExcluirDiretor,
+    setAtualizarDiretor
 }
