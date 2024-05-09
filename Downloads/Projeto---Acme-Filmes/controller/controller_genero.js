@@ -7,7 +7,7 @@ const message = require('../module/config.js');
 
 const generoDAO = require('../model/DAO/genero.js')
 
-const setInserirFilme = async function (dadosGenero, contentType) {
+const setInserirGenero = async function (dadosGenero, contentType) {
     try {
 
         if (String(contentType).toLowerCase() == 'application/json') {
@@ -52,5 +52,5 @@ const setInserirFilme = async function (dadosGenero, contentType) {
 }
 
 module.exports = {
-    setInserirFilme
+    setInserirGenero
 }

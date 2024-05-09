@@ -21,6 +21,7 @@ const message = require('../module/config.js')
 //Import do arquivo DAO que fará a comunicação com o Banco de Dados   
 const classDAO = require('../model/DAO/classificacao.js');
 
+//Função para listar todos as classificações presentes no DB
 const getListarClass = async function () {
     const classJSON = {}
 
@@ -40,7 +41,7 @@ const getListarClass = async function () {
         return message.ERROR_INTERNAL_SERVER_DB //500
 }
 
-//Função para buscar um filme pelo id
+//Função para buscar uma classificação pelo id
 const getBuscarClass = async function (id) {
     //Recebe o ID do filme
     let idClass = id
@@ -74,7 +75,7 @@ const getBuscarClass = async function (id) {
 
 }
 
-//Função para buscar um filme filtrando pelo nome
+//Função para buscar uma classificação filtrando pelo nome
 const getBuscarClassNome = async function (classificacao) {
     //variável local para facilitar a validação
     const nomeClass = classificacao
@@ -106,6 +107,7 @@ const getBuscarClassNome = async function (classificacao) {
 
 }
 
+//Função para inserir uma nova classificação ao DB
 const setInserirNovaClass = async function (dadosClass, contentType) {
 
 
@@ -172,6 +174,7 @@ const setInserirNovaClass = async function (dadosClass, contentType) {
 
 }
 
+//Função para deletar uma classificação ao DB
 const setExcluirClass = async function (id_classificacao) {
 
     try {
@@ -201,6 +204,7 @@ const setExcluirClass = async function (id_classificacao) {
 
 }
 
+//Função para atualizar uma classificação ao DB
 const setAtualizarClass = async function (dadosClass, contentType, id) {
 
     //Validação do content-Type da requisição  

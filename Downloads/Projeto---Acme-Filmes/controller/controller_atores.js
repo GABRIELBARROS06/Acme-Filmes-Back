@@ -9,10 +9,14 @@ const message = require('../module/config.js');
 
 const atorDAO = require('../model/DAO/ator.js');
 
+//Criação de uma função para listar todos os atores presentes no DB
 const getListarAtor = async function () {
 
+
+    //JSON
     const atorJSON = {}
 
+    //dados dos autores ligado ao DAO, com a função para selecionar os atores
     let dadosAtor = await atorDAO.selectAllAtor()
 
     if (dadosAtor) {
@@ -24,7 +28,7 @@ const getListarAtor = async function () {
             return atorJSON
         }
         else {
-            return message.ERROR_INTERNAL_SERVER_DB
+            return message.ERROR_INTERNAL_SERVER_DB //500
         }
     }
 
@@ -35,6 +39,7 @@ const getListarAtor = async function () {
 
 }
 
+//Função para buscar um Ator, filtrando pelo ID
 const getBuscarIdAtor = async function (id_ator) {
 
     let idAtor = id_ator
@@ -112,6 +117,7 @@ const getBuscarNomeAtor = async function (nome) {
 
 }
 
+//Função para inserir um novo ator ao DB
 const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
 
     try {
@@ -169,6 +175,7 @@ const setInserirNovoAtor = async function (id, dadosAtor, contentType) {
 
 }
 
+//Função para excluir um Ator pelo ID
 const setExcluirAtor = async function (id_classificacao) {
 
     try {
@@ -195,6 +202,7 @@ const setExcluirAtor = async function (id_classificacao) {
     }
 }
 
+//Função para atualizar um ator, usando o iD
 const setAtualizarAtor = async function (id_ator, dadosAtor, contentType) {
     try {
 

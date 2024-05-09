@@ -9,6 +9,7 @@ const message = require('../module/config.js');
 
 const diretorDAO = require('../model/DAO/diretor.js');
 
+//Função para listar todos os diretores, presentes no DB
 const getListarDiretor = async function () {
 
     const diretorJSON = {}
@@ -24,7 +25,7 @@ const getListarDiretor = async function () {
             return diretorJSON
         }
         else {
-            return message.ERROR_INTERNAL_SERVER_DB
+            return message.ERROR_INTERNAL_SERVER_DB //500
         }
     }
 
@@ -35,6 +36,7 @@ const getListarDiretor = async function () {
 
 }
 
+//Função para buscar um diretor, filtrando pelo ID
 const getBuscarIdDiretor = async function (id_diretor) {
 
     let idDiretor = id_diretor
@@ -112,6 +114,7 @@ const getBuscarNomeDiretor = async function (nome) {
 
 }
 
+//Função para inserir um novo diretor, ao DB
 const setInserirNovoDiretor = async function (id, dadosDiretor, contentType) {
 
     try {
@@ -120,12 +123,13 @@ const setInserirNovoDiretor = async function (id, dadosDiretor, contentType) {
 
         if (String(contentType).toLowerCase() == 'application/json') {
 
-            let diretorJSON = {}
+            //objeto JSON de Ator
+            const diretorJSON = {}
 
 
-            if (dadosDiretor.nome == '' || dadosDiretor.nome == null || dadosDiretor.nome == undefined || dadosDiretor.length > 200 ||
-                dadosDiretor.biografia == '' || dadosDiretor.biografia == null || dadosDiretor.biografia == undefined || dadosDiretor.length > 500 ||
-                dadosDiretor.foto == '' || dadosDiretor.foto == null || dadosDiretor.foto == undefined || dadosDiretor.length > 30 ||
+            if (dadosDiretor.nome == ''            || dadosDiretor.nome == null            || dadosDiretor.nome == undefined            || dadosDiretor.length > 200 ||
+                dadosDiretor.biografia == ''       || dadosDiretor.biografia == null       || dadosDiretor.biografia == undefined       || dadosDiretor.length > 500 ||
+                dadosDiretor.foto == ''            || dadosDiretor.foto == null            || dadosDiretor.foto == undefined            || dadosDiretor.length > 30  ||
                 dadosDiretor.data_nascimento == '' || dadosDiretor.data_nascimento == null || dadosDiretor.data_nascimento == undefined || dadosDiretor.length > 20
 
             ) {
@@ -136,17 +140,18 @@ const setInserirNovoDiretor = async function (id, dadosDiretor, contentType) {
                 let validadeStatus = true
 
                 if (validadeStatus) {
+                      //encaminha o ID ao DAO para fazer a pesquisa no banco de dados
                     let diretorNovo = await diretorDAO.insertDiretor(id, dadosDiretor)
-                    let diretorID = await diretorDAO.lastInsertId()
+                    //let diretorID = await diretorDAO.lastInsertId()
 
 
-
-                    if (atorNovo) {
-                        atorJSON.file = dadosAtor
-                        atorJSON.id = 'Id editado' + id
-                        atorJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
-                        atorJSON.status = message.SUCCESS_CREATED_ITEM.status
-                        atorJSON.message = message.SUCCESS_CREATED_ITEM.message
+                     //validação para ver a quantidade de itens retornados
+                    if (diretorNovo.length > 0) {
+                        diretorJSON.file = dadosDiretor
+                        diretorJSON.id = 'Id editado' + id
+                        diretorJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                        diretorJSON.status = message.SUCCESS_CREATED_ITEM.status
+                        diretorJSON.message = message.SUCCESS_CREATED_ITEM.message
 
 
                         return diretorJSON //201
@@ -169,6 +174,8 @@ const setInserirNovoDiretor = async function (id, dadosDiretor, contentType) {
 
 }
 
+
+//Função para excluir um Diretor, presente no DB, filtrando pelo ID
 const setExcluirDiretor = async function (id_classificacao) {
 
     try {
@@ -195,7 +202,8 @@ const setExcluirDiretor = async function (id_classificacao) {
     }
 }
 
-const setAtualizarDiretor = async function (id_ator, dadosDiretor, contentType) {
+//Função para Atualizar um diretor, presente no DB, filtrando pelo ID
+const setAtualizarDiretor = async function (id_diretor, dadosDiretor, contentType) {
     try {
 
 
@@ -204,17 +212,17 @@ const setAtualizarDiretor = async function (id_ator, dadosDiretor, contentType) 
 
         if (String(contentType).toLowerCase() == 'application/json') {
 
-            let idLocal = id_ator
+            let idLocal = id_diretor
 
-            const atorJSON = {}
+            const diretorJSON = {}
 
             console.log('aaaaaaaaaaaa');
 
-            if (dadosAtor.id_sexoa == '' || dadosAtor.id_sexoa == null || dadosAtor.id_sexoa == undefined || dadosAtor.length > 2 ||
-                dadosAtor.nome == '' || dadosAtor.nome == null || dadosAtor.nome == undefined || dadosAtor.length > 200 ||
-                dadosAtor.biografia == '' || dadosAtor.biografia == null || dadosAtor.biografia == undefined || dadosAtor.length > 500 ||
-                dadosAtor.foto == '' || dadosAtor.foto == null || dadosAtor.foto == undefined || dadosAtor.length > 200 ||
-                dadosAtor.data_nascimento == '' || dadosAtor.data_nascimento == null || dadosAtor.data_nascimento == undefined || dadosAtor.length > 20
+            if (dadosDiretor.id_sexoa == ''        || dadosDiretor.id_sexoa == null        || dadosDiretor.id_sexoa == undefined     || dadosAtor.length > 2   ||
+                dadosDiretor.nome == ''            || dadosDiretor.nome == null            || dadosDiretor.nome == undefined         || dadosAtor.length > 200 ||
+                dadosDiretor.biografia == ''       || dadosDiretor.biografia == null       || dadosDiretor.biografia == undefined    || dadosAtor.length > 500 ||
+                dadosDiretor.foto == ''            || dadosDiretor.foto == null            || dadosDiretor.foto == undefined         || dadosAtor.length > 200 ||
+                dadosDiretor.data_nascimento == '' || dadosDiretor.data_nascimento == null || dadosAtor.data_nascimento == undefined || dadosAtor.length > 20
 
             ) {
                 return message.ERROR_REQUIRED_FIELDS
@@ -225,25 +233,25 @@ const setAtualizarDiretor = async function (id_ator, dadosDiretor, contentType) 
                 let validadeStatus = true
 
                 if (validadeStatus == true) {
-                    console.log(dadosAtor);
+                    console.log(dadosDiretor);
                     
                     console.log('ooooooooooo');
                     dadosAtor.id = idLocal
-                    let atorNovo = await atorDAO.updateAtor(dadosAtor)
+                    let diretorAtualizado = await diretorDAO.updateDiretor(dadosDiretor)
                   
 
-                    console.log(atorNovo)
+                    console.log(diretorAtualizado)
 
                     console.log('pppppppppp');
 
-                    if (atorNovo) {
-                        atorJSON.file = dadosAtor
-                        atorJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
-                        atorJSON.status = message.SUCCESS_CREATED_ITEM.status
-                        atorJSON.message = message.SUCCESS_CREATED_ITEM.message
+                    if (diretorAtualizado) {
+                        diretorJSON.file = dadosDiretor
+                        diretorJSON.status_code = message.SUCCESS_CREATED_ITEM.status_code
+                        diretorJSON.status = message.SUCCESS_CREATED_ITEM.status
+                        diretorJSON.message = message.SUCCESS_CREATED_ITEM.message
 
         
-                        return atorJSON
+                        return diretorJSON
                     }
                     else {
                     console.log("tototo");
